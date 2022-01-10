@@ -27,7 +27,7 @@ const Navigation = () => {
       {isLoggedIn && (
         <>
           <NavLink
-            to="/todos"
+            to="/contacts"
             exact
             style={styles.link}
             activeStyle={styles.activeLink}

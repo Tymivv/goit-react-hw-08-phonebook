@@ -14,7 +14,7 @@ const ContactList = ({  onDelete }) => {
     const normalizedFilter = filter.toLowerCase();
     console.log(contacts)
 
-    return contacts.filter(({ name }) =>
+    return contacts?.filter(({ name }) =>
       name?.toLowerCase().includes(normalizedFilter)
     );
   };
@@ -24,10 +24,10 @@ const ContactList = ({  onDelete }) => {
 
 
     <ul className="list">
-      {filteredContacts().map(({ id, name, phone  }) => (
+      {filteredContacts().map(({ id, name, number  }) => (
         <>
           <li className="item" key={id}>
-            {name} : {phone}
+            {name} : {number}
           </li>
           <button className="button9" type="button" onClick={onDelete(id)}>
             Delete {name}

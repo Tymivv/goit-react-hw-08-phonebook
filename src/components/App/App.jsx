@@ -2,7 +2,7 @@ import { useEffect, Suspense, lazy } from 'react';
 import ContactForm from "../ContactForm/ContactForm";
 import ContactList from "../ContactList/ContactList";
 import Filter from "../Filter/Filter";
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -57,9 +57,9 @@ const App = () => {
       return;
     }
     const newContact = {
-      id: nanoid(),
+      // id: nanoid(),
       name: name,
-      phone: number,
+      number: number,
     };
     console.log(newContact);
     dispatch(addContact(newContact));
@@ -90,10 +90,10 @@ const App = () => {
                  <PublicRoute exact path="/register" restricted>
                   <RegisterView />
                 </PublicRoute>
-                 <PublicRoute exact path="/login" redirectTo="/todos" restricted>
+                 <PublicRoute exact path="/login" redirectTo="/contacts" restricted>
                 <LoginView />
               </PublicRoute>
-<PrivateRoute path="/todos" redirectTo="/login">
+<PrivateRoute path="/contacts" redirectTo="/login">
       <h1>Phonebooc</h1>
       <ContactForm onSubmit={addContacts1} />
 

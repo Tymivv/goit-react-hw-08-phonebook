@@ -1,25 +1,12 @@
-const BASE_URL = 'https://61c4ceeef1af4a0017d997e8.mockapi.io';
+import axios from 'axios';
 
-const fetchData = async (path, options = {}) => {
-  const res = await fetch(`${BASE_URL}/${path}`, options);
-  return res.ok ? res.json() : Promise.reject(new Error(res.statusText));
-};
+// const BASE_URL = 'https://61c4ceeef1af4a0017d997e8.mockapi.io';
+// const BASE_URL = 'https://connections-api.herokuapp.com';
 
-const getData = (endpoint, options) => fetchData(endpoint, options);
+const getData = endpoint => axios.get(endpoint);
 
-const saveItem = (endpoint, item, options = {}) => {
-  const finalOptions = {
-    method: 'POST',
-    body: JSON.stringify(item),
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    ...options,
-  };
-  return fetchData(endpoint, finalOptions);
-};
+const saveItem = (endpoint, item) => axios.post(endpoint, item);
 
-const deleteItem = (endpoint, id, options = {}) =>
-  fetchData(`${endpoint}/${id}`, { method: 'DELETE', ...options });
+const deleteItem = (endpoint, id) => axios.delete(`${endpoint}/${id}`);
 
 export { getData, saveItem, deleteItem };
