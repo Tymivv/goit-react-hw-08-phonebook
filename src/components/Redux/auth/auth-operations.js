@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -23,7 +24,7 @@ const register = createAsyncThunk('auth/register', async credentials => {
     token.set(data.token);
     return data;
   } catch (error) {
-    // TODO: Добавить обработку ошибки error.message
+    toast.error(`${'Error, please repeat the request'}`);
   }
 });
 
@@ -68,10 +69,11 @@ const fetchCurrentUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
 
+    const persistedToken = state.auth.token;
+    // console.log(persistedToken);
     if (persistedToken === null) {
-      console.log('Токена нет, уходим из fetchCurrentUser');
+      // console.log('Токена нет, уходим из fetchCurrentUser');
       return thunkAPI.rejectWithValue();
     }
 

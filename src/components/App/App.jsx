@@ -3,7 +3,7 @@ import ContactForm from "../ContactForm/ContactForm";
 import ContactList from "../ContactList/ContactList";
 import Filter from "../Filter/Filter";
 import { Switch } from 'react-router-dom';
-
+import { ToastContainer } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -11,6 +11,7 @@ import AppBar from '../AppBar';
 import PrivateRoute from '../PrivateRoute';
 import PublicRoute from '../PublicRoute';
 import { authOperations, authSelectors } from '../Redux/auth';
+import { Spinner } from 'react-bootstrap';
 
 import {
   getContacts,
@@ -18,9 +19,8 @@ import {
   deleteContact,
 } from "../Redux/Contacts/contactsOperations";
 
+const HomeView = lazy(() => import('../views/HomView'));
 
-
-import { nanoid } from "nanoid";
 const RegisterView = lazy(() => import('../views/RegisterView'));
 const LoginView = lazy(() => import('../views/LoginView'));
 
@@ -77,36 +77,41 @@ const App = () => {
   const deleteContacts1 = (id) => () => {
   dispatch(deleteContact(id));
   };
- 
+
   return (
     <div>
-           {isFetchingCurrentUser ? (
+          {isFetchingCurrentUser ? (
         <h1>Показываем React Skeleton</h1>
       ) : (
           <>
             <Switch>
-               <Suspense fallback={<p>Загружаем...</p>}>
+              
+              <Suspense fallback={<Spinner animation="grow" />}>
                 <AppBar />
-                 <PublicRoute exact path="/register" restricted>
+                <PublicRoute exact path="/">
+                  <HomeView />
+                </PublicRoute>
+                <PublicRoute exact path="/register" restricted>
                   <RegisterView />
                 </PublicRoute>
-                 <PublicRoute exact path="/login" redirectTo="/contacts" restricted>
-                <LoginView />
-              </PublicRoute>
-<PrivateRoute path="/contacts" redirectTo="/login">
-      <h1>Phonebooc</h1>
-      <ContactForm onSubmit={addContacts1} />
-
-      <Filter
-        onChange={(e) => handleFilterChange(e.target.value)}
-      />
-      <ContactList
-        onDelete={deleteContacts1} 
+                <PublicRoute exact path="/login" redirectTo="/contacts" restricted>
+                  <LoginView />
+                </PublicRoute>
+                <PrivateRoute path="/contacts" redirectTo="/login">
+                  <h1>Phonebooc</h1>
+                  <ContactForm onSubmit={addContacts1} />
+                  <Filter
+                  onChange={(e) => handleFilterChange(e.target.value)}
+                  />
+                  <ContactList
+                  onDelete={deleteContacts1} 
                   />
                   </PrivateRoute>
                 </Suspense>
             </Switch>
-            </> )}
+            
+        </>)}
+      <ToastContainer />
     </div>
   );
 };

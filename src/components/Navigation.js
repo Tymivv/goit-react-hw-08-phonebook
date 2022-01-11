@@ -34,14 +34,6 @@ const Navigation = () => {
           >
             Контакти
           </NavLink>
-          {/* <NavLink
-            to="/upload"
-            exact
-            style={styles.link}
-            activeStyle={styles.activeLink}
-          >
-            Загрузить
-          </NavLink> */}
         </>
       )}
     </nav>

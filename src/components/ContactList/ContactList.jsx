@@ -25,14 +25,12 @@ const ContactList = ({  onDelete }) => {
 
     <ul className="list">
       {filteredContacts().map(({ id, name, number  }) => (
-        <>
           <li className="item" key={id}>
-            {name} : {number}
-          </li>
+          {name} : {number}
           <button className="button9" type="button" onClick={onDelete(id)}>
             Delete {name}
           </button>
-        </>
+          </li>
       ))}
     </ul>
   );
